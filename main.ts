@@ -2,8 +2,7 @@ input.onSound(DetectedSound.Loud, function () {
     ledky = 1
     while (!(input.logoIsPressed())) {
         RingbitCar.freestyle(randint(-100, 100), randint(-10, 10))
-        basic.pause(200)
-        RingbitCar.running_time(RingbitCar.Direction_run.forward, 1)
+        basic.pause(500)
     }
     ledky = 0
 })
