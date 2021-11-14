@@ -10,6 +10,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     basic.clearScreen()
 })
 let vystraseny = 0
+let red_blue = 0
 input.setSoundThreshold(SoundThreshold.Loud, 180)
 vystraseny = 0
 let pasik = neopixel.create(DigitalPin.P0, 2, NeoPixelMode.RGB)
@@ -20,19 +21,27 @@ pasik.showRainbow(1, 360)
 basic.pause(1000)
 basic.showIcon(IconNames.EigthNote)
 basic.forever(function () {
-    if (vystraseny == 1) {
-        pasik.showColor(neopixel.colors(NeoPixelColors.Red))
-        music.ringTone(349)
-        basic.showIcon(IconNames.Sad)
-        basic.pause(200)
-        music.ringTone(494)
-        pasik.showColor(neopixel.colors(NeoPixelColors.Blue))
-        basic.showIcon(IconNames.Surprised)
-        basic.pause(200)
-    } else {
-        basic.showIcon(IconNames.Yes)
-        music.stopAllSounds()
-        pasik.showColor(neopixel.colors(NeoPixelColors.White))
-        RingbitCar.brake()
+	
+})
+control.inBackground(function () {
+    while (true) {
+        if (vystraseny == 1) {
+            if (red_blue == 0) {
+                pasik.showColor(neopixel.colors(NeoPixelColors.Red))
+                music.ringTone(349)
+                basic.showIcon(IconNames.Sad)
+            } else {
+                pasik.showColor(neopixel.colors(NeoPixelColors.Blue))
+                music.ringTone(494)
+                basic.showIcon(IconNames.Surprised)
+            }
+            red_blue = red_blue ? 0 : 1
+basic.pause(200)
+        } else {
+            music.stopAllSounds()
+            pasik.showColor(neopixel.colors(NeoPixelColors.White))
+            RingbitCar.brake()
+            basic.showIcon(IconNames.EigthNote)
+        }
     }
 })
